@@ -1,61 +1,190 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+When run this project first need to databse configuration.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+1. Open database.php file from config folder and keep this below code.
 
-## About Laravel
+'host' =>'127.0.0.1',
+'port' => '3307',
+'database' =>'loan',
+'username' => 'root',
+'password' => 'Admin@123',
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+In .env files configuration is not working for my system that`s why i am configuring to database.php files.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+2. I have keep DB folder for database table configuration take this files from DB folder and import 
+in your database.
+3. I have also created for Postman folder for collection of all API. please take files from postman 
+folder and import on your postman for checking the API functionlity.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+REST API :-
+1. Customer create loan
+URL :- http://127.0.0.1:8000/api/request_loan (Keep it post method)
+Request :-
+{ 
+   "loanAmount":"30000",
+   "loanTerm":"3"
+}
+Response :-
+{"statusCode":"200","status":"Your loan created successfully and your loan number is AS2208181660815346"}
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Admin View All created loan by customer
+URL :- http://127.0.0.1:8000/api/get_all_loans (Keep it get method)
+Request :-
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Response :-
+{
+    "statusCode": "200",
+    "status": "Successful",
+    "loanList": [
+        {
+            "intId": 1,
+            "loanAmount": "15000.00",
+            "loanTerm": 5,
+            "createdOn": "2022-08-18 15:05:14",
+            "tokenNumber": "AS2208181660815313",
+            "loanStatus": "Pending",
+            "paymentStaus": "Pending",
+            "repayList": [
+                {
+                    "loanAmount": "3000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-08-25 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                },
+                {
+                    "loanAmount": "3000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-09-01 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                },
+                {
+                    "loanAmount": "3000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-09-08 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                },
+                {
+                    "loanAmount": "3000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-09-15 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                },
+                {
+                    "loanAmount": "3000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-09-22 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                }
+            ]
+        },
+        {
+            "intId": 2,
+            "loanAmount": "30000.00",
+            "loanTerm": 3,
+            "createdOn": "2022-08-18 15:05:46",
+            "tokenNumber": "AS2208181660815346",
+            "loanStatus": "Pending",
+            "paymentStaus": "Pending",
+            "repayList": [
+                {
+                    "loanAmount": "10000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-08-25 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                },
+                {
+                    "loanAmount": "10000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-09-01 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                },
+                {
+                    "loanAmount": "10000.00",
+                    "paymentStaus": "Pending",
+                    "paymentDate": "2022-09-08 00:00:00",
+                    "paidOn": null,
+                    "paidAmount": "0.00"
+                }
+            ]
+        }
+    ]
+}
 
-## Laravel Sponsors
+3. Admin take action on loan by putting loan token numebr and  1 in status for approval
+URL :- http://127.0.0.1:8000/api/take_action (Keep it post method)
+Request :-
+{ 
+   "loanToken":"AS2208181660815346",
+   "status":"1"
+}
+Response :-
+{"statusCode":"200","status":"Status updated successfully"}
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+4. Customer can view own loan status and payment resheduled date by providing token number.
+URL :- http://127.0.0.1:8000/api/get_own_loans (Keep it post method)
+Request :-
+{ 
+   "loanToken":"AS2208181660815346"
+}
+Response :-
+{
+    "statusCode": "200",
+    "status": "Successful",
+    "loanList": [
+        {
+            "intId": 6,
+            "loanId": 2,
+            "loanAmount": "10000.00",
+            "paymentDate": "2022-08-25 00:00:00",
+            "paymentStaus": 1,
+            "paidAmount": "10000.00",
+            "paidOn": "2022-08-18 09:39:58",
+            "tokenNumber": "AS2208181660815346",
+            "needPay": 0,
+            "paymentStatus": "Paid"
+        },
+        {
+            "intId": 7,
+            "loanId": 2,
+            "loanAmount": "10000.00",
+            "paymentDate": "2022-09-01 00:00:00",
+            "paymentStaus": 1,
+            "paidAmount": "10000.00",
+            "paidOn": "2022-08-18 09:40:36",
+            "tokenNumber": "AS2208181660815346",
+            "needPay": 0,
+            "paymentStatus": "Paid"
+        },
+        {
+            "intId": 8,
+            "loanId": 2,
+            "loanAmount": "10000.00",
+            "paymentDate": "2022-09-08 00:00:00",
+            "paymentStaus": 1,
+            "paidAmount": "10000.00",
+            "paidOn": "2022-08-18 09:40:41",
+            "tokenNumber": "AS2208181660815346",
+            "needPay": 0,
+            "paymentStatus": "Paid"
+        }
+    ]
+}
 
-### Premium Partners
+5. Customer can pay loan amount by providing token number, loan amount and due date
+URL :- http://127.0.0.1:8000/api/payLoanAmount (Keep it post method)
+Request :-
+{ 
+   "loanToken":"AS2208181660815346",
+   "loanAmount":"10000",
+   "dueDate":"08-09-2022"
+}
+Response :-
+{"statusCode":"200","status":"Your loan amount paid successfully"}
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
